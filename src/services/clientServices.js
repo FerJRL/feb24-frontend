@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const clientsConn = import.meta.env.VITE_CLIENTS_URL;
+const clientsConn = import.meta.env.VITE_USERS_URL;
 
 const getClient = async (id) => {
     const response = await axios.get(`${clientsConn}/v1/${id}`);
