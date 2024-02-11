@@ -1,0 +1,265 @@
+/* products.css */
+
+.products-title {
+  text-align: center;
+  color: #333;
+}
+
+.products-filter {
+  max-width: 60%;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  }
+
+.products-filter-input {
+  width: calc(100% - 310px);
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid black;
+
+  /*border radius on the left part*/
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+}
+
+.products-filter-bids-type {
+  width: 170px;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: #c6ecf8;
+  border: 1px solid black;
+  border-left: 0px solid black;
+}
+
+.products-filter-radius {
+  width: 90px;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: #c6ecf8;
+  border: 1px solid black;
+  border-left: 0px solid black;
+
+  /*border radius on the right part*/
+  border-top-right-radius: 100px;
+  border-bottom-right-radius: 100px;
+
+}
+
+#search-icon {
+  padding: 10px;
+  margin-left: 5px;
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 0 10%;
+}
+
+.product {
+  width: 300px;
+  margin: 20px;
+  padding: 15px;
+  border: 1px solid #c6ecf8;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #add8e663;
+  transition: transform 0.2s ease-in-out; /* Add transition property */
+
+  max-height: 650px;
+
+  /*set this at the bottom of the father div*/
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+
+}
+
+.product:hover {
+  transform: scale(1.02); /* Increase size on hover */
+}
+
+.product-info {
+  text-align: center;
+}
+
+.product-name {
+  font-size: 1.5em;
+  color: #333;
+}
+
+
+.product-description {
+  color: #666;
+}
+
+.product-image {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.product-image img {
+  max-width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.product-bids {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.product-bid-highest {
+  font-weight: bold;
+  font-size: larger;
+}
+
+.product-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.product-button,
+.product-bid-button {
+  background-color: #ffffff;
+  color: black;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  font-size: large;
+  transition-duration: 0.4s;
+
+  /*set this at the bottom of the father div*/
+  width: 100%;
+  text-align: center;
+  display: block;
+  margin-top: 20px;
+
+
+  margin-bottom: auto;
+
+
+}
+
+.product-button:hover {
+  background-color: #c6ecf8;
+}
+
+
+
+.product-user {
+  display: flex;
+  margin-top: 5px;
+  cursor: pointer;
+  width: fit-content;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-user-name {
+  margin: 0 5px;
+}
+
+.product-user img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.products-map-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  border-width: 1px;
+}
+
+.products-map {
+  width: 1000px;
+  /* border: solid 1px black; */
+  height: 350px;
+}
+
+.loading-spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid #3498db;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.product-date {
+  margin-top: 5px;
+  font-size: medium;
+  color: #666;
+  text-align: center;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive Styles */
+
+@media (max-width: 768px) {
+  .product {
+    width: calc(50% - 40px);
+  }
+  .products-filter-input,
+  .products-filter-bids-type {
+    width: 75%;
+  }
+
+  .products-filter-radius {
+    width: 50%;
+  }
+}
+
+@media (max-width: 480px) {
+  .product {
+    width: 100%;
+  }
+  .products-filter-input,
+  .products-filter-bids-type {
+    width: 100%;
+  }
+
+  .products-filter-radius {
+    width: 75%;
+  }
+}
+
+.slider-container{
+  padding: 20px;
+}
+
+.price-filter{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: -10px;
+  margin-right: 20px;
+  width: 200px;
+}
+
