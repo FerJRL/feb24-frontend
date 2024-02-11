@@ -92,7 +92,7 @@ export default function NewProductForm({ userLogged }) {
     const image = await productServices.addImage(
       productId,
       event.target.files[0],
-      userLogged.oauthToken
+      userLogged.token
     );
     setLoading(false);
 
@@ -101,29 +101,29 @@ export default function NewProductForm({ userLogged }) {
 
   const handleDeleteImage = async (image) => {
     setLoading(true);
-    await productServices.deleteImage(image.public_id, userLogged.oauthToken);
+    await productServices.deleteImage(image.public_id, userLogged.token);
     setImages(images.filter((img) => image.public_id != img.public_id));
     setLoading(false);
   };
 
   const handleDeleteNewImage = async (image) => {
     setLoading(true);
-    await productServices.deleteImage(image.public_id, userLogged.oauthToken);
+    await productServices.deleteImage(image.public_id, userLogged.token);
     setNewImages(newImages.filter((img) => image.public_id != img.public_id));
     setLoading(false);
   };
 
   const handleCancel = async () => {
     newImages.forEach(async (image) => {
-      await productServices.deleteImage(image.public_id, userLogged.oauthToken);
+      await productServices.deleteImage(image.public_id, userLogged.token);
     });
     const productData = await productServices.getProduct(
       productId,
-      userLogged.oauthToken
+      userLogged.token
     );
 
     if (productData.name == "") {
-      productServices.deleteProduct(productId, userLogged.oauthToken);
+      productServices.deleteProduct(productId, userLogged.token);
     }
     navigate(`/`);
   };
