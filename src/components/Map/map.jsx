@@ -38,7 +38,6 @@ const Map = (props) => {
 
                         <div className="carousel-container">
                             <div className="map-product-info">
-                              <a href={`/product/${sofa._id}`}>
                                 <h5>{sofa.anfitrion}</h5>
                                 <img
                                   className="map-product-image"
@@ -49,7 +48,6 @@ const Map = (props) => {
                                   }
                                   alt="Sofa Image"
                                 />
-                              </a>
                               <p>
                                 <strong>Direccion:</strong>{" "}
                                 {sofa.direccion.slice(0,20)+"..."}
