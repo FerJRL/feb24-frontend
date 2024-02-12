@@ -7,30 +7,30 @@ import "../../assets/styles/products.css";
 
 
 
-export default function Products({ userLogged }) {
+export default function Sofas({ userLogged }) {
     const navigate = useNavigate();
 
     let userPosition = [36.602274, -4.531727];
     
     
 
-    const [products, setProducts] = useState([]);
+    const [sofas, setSofas] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const productsConn = import.meta.env.VITE_PRODUCTS_URL;
+    const sofasConn = import.meta.env.VITE_PRODUCTS_URL;
 
-    const getProductsFromAPI = async () => {
+    const getSofasFromAPI = async () => {
         try {
-            const productsResponse = await axios.get(
-                `${productsConn}/v2/`
+            const sofasResponse = await axios.get(
+                `${sofasConn}/v2/`
             );
 
-            loginServices.checkResponse(productsResponse.data);
+            loginServices.checkResponse(sofasResponse.data);
 
-            setProducts(productsResponse.data);
+            setSofas(sofasResponse.data);
 
         } catch (error) {
-            console.error("Error fetching products:", error);
+            console.error("Error fetching sofas:", error);
         }
     };
 
@@ -38,7 +38,7 @@ export default function Products({ userLogged }) {
         const fetchData = async () => {
             setLoading(true);
             try {    
-                await getProductsFromAPI();
+                await getSofasFromAPI();
             } catch (error) {
                 setLoading(false);
                 console.error("Error in useEffect:", error);
@@ -63,56 +63,44 @@ export default function Products({ userLogged }) {
                         <div className="products-map-div">
                             <Map
                                 className="products-map"
-                                products={products}
+                                sofas={sofas}
                                 userPosition={userPosition}
                             />
                         </div>
 
                         <div className="products">
-                            {products.map((product) => {
-                                const limitDate = new Date(product.date);
-                                limitDate.setDate(limitDate.getDate() + product.length);
+                            {sofas.map((sofa) => {
 
                                 return (
-                                    <div className="product" key={product._id}>
+                                    <div className="product" key={sofa._id}>
                                         <div
                                             className="product-user"
-                                            onClick={() => {
-                                                navigate("/profile/" + user._id);
-                                            }}
                                         >
                                             <img src="user.jpg"></img>
-                                            <p className="product-user-name">nombreusuario</p>
+                                            <p className="product-user-name">{sofa.anfitrion}</p>
                                         </div>
                                         <div className="product-info">
-                                            <h2 className="product-name">{product.name}</h2>
-                                            <p className="product-description">
-                                                {product.description}
-                                            </p>
+                                            <h2 className="product-name">{sofa.direccion}</h2>
                                         </div>
-                                        {product.images ? (
+                                        {sofa.images ? (
                                             <div className="product-image">
-                                                <img src={product.images[0].url} alt={product.name} />
+                                                <img src={sofa.images[0].url} alt={sofa.direccion} />
                                             </div>
                                         ) : (
                                             <div className="product-image">
                                                 <img src="no_image.png" alt="No image available" />
                                             </div>
                                         )}
-                                        <div className="product-bids">
-                                            <p className={"product-price "} >
-                                                Initial price: {product.price}€
-                                            </p>
-                                        </div>
+                                        
                                         
                                         <div className="product-buttons">
                                             <button
                                                 className="product-button"
                                                 onClick={() => {
-                                                    navigate("/product/" + product._id);
+                                                    navigate("/sofa/" + sofa._id);
                                                 }}
                                             >
-                                                Product details
+                                                Detalles
                                             </button>
                                         </div>
                                     </div>

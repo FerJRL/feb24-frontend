@@ -21,47 +21,39 @@ const Map = (props) => {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
 
-          {props.products.map((product) => (
-                // each product has a marker on the map
+          {props.sofas.map((sofa) => (
+                // each sofa has a marker on the map
                 <Marker
-                  key={product._id}
+                  key={sofa._id}
                   position={[
-                    product.location.coordinates[1],
-                    product.location.coordinates[0],
+                    sofa.location.coordinates[1],
+                    sofa.location.coordinates[0],
                   ]}
                 >
                   <Popup>
                     <div className="popup-container">
                       {loading ? (
-                        <p>Loading products...</p>
+                        <p>Loading sofas...</p>
                       ) : (
 
                         <div className="carousel-container">
                             <div className="map-product-info">
-                              <a href={`/product/${product._id}`}>
-                                <h5>{product.name}</h5>
+                              <a href={`/product/${sofa._id}`}>
+                                <h5>{sofa.anfitrion}</h5>
                                 <img
                                   className="map-product-image"
                                   src={
-                                    product.images
-                                      ? product.images[0].url
+                                    sofa.images
+                                      ? sofa.images[0].url
                                       : "no_image.png"
                                   }
-                                  alt="Product Image"
+                                  alt="Sofa Image"
                                 />
                               </a>
                               <p>
-                                <strong>Descr:</strong>{" "}
-                                {product.description.slice(0,20)+"..."}
-                                <br></br>
-                                <strong>Price:</strong>{" "}
-                                {product.price}
-                                <br></br>
-                                <strong>Date:</strong>{" "}
-                                {new Date(
-                                  product.date
-                                ).toLocaleDateString()}
-                                <br></br>
+                                <strong>Direccion:</strong>{" "}
+                                {sofa.direccion.slice(0,20)+"..."}
+                                
                               </p>
                             </div>
                           

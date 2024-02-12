@@ -2,21 +2,20 @@ import axios from "axios";
 import loginServices from "./loginServices";
 import clientServices from "./clientServices";
 
-const productsConn = import.meta.env.VITE_PRODUCTS_URL;
+const sofasConn = import.meta.env.VITE_PRODUCTS_URL;
 const cloudinaryConn = import.meta.env.VITE_CLOUDINARY_URL;
 
-const getProduct = async (id) => {
-  const response = await axios.get(`${productsConn}/v1/${id}`);
+const getSofa = async (id) => {
+  const response = await axios.get(`${sofasConn}/v1/${id}`);
   loginServices.checkResponse(response.data);
   return response.data;
 };
 
-const createProduct = async (body, token) => {
+const createSofa = async (body, token) => {
   const response = await axios.post(
-    `${productsConn}/v1/`,
+    `${sofasConn}/v1/`,
     {
-      ...body,
-      soldID: "",
+      ...body
     },
     {
       headers: {
@@ -28,8 +27,8 @@ const createProduct = async (body, token) => {
   return response.data;
 };
 
-const deleteProduct = async (id, token) => {
-  const response = await axios.delete(`${productsConn}/v2/${id}`, {
+const deleteSofa = async (id, token) => {
+  const response = await axios.delete(`${sofasConn}/v2/${id}`, {
     headers: {
       Authorization: token,
     },
@@ -38,9 +37,9 @@ const deleteProduct = async (id, token) => {
   return response.data;
 };
 
-const modifyProduct = async (id, body, token) => {
+const modifySofa = async (id, body, token) => {
   const response = await axios.put(
-    `${productsConn}/v1/${id}`,
+    `${sofasConn}/v1/${id}`,
     body,
     {
       headers: {
@@ -94,16 +93,13 @@ const deleteImage = async (imageId, token) => {
   return response.data;
 };
 
-const createEmptyProduct = async (loggedUserId, token) => {
+const createEmptySofa = async (loggedUserEmail, token) => {
   const body = {
-    name: "",
-    description: "",
-    price: "",
-    length: "",
-    userID: loggedUserId,
+    anfitrion: loggedUserEmail,
+    direccion: ""
   };
 
-  const response = await axios.post(`${productsConn}/v1/`, body, {
+  const response = await axios.post(`${sofasConn}/v1/`, body, {
     headers: {
       Authorization: token,
     },
@@ -112,14 +108,14 @@ const createEmptyProduct = async (loggedUserId, token) => {
   return response.data;
 };
 
-const productServices = {
-  getProduct,
-  createProduct,
-  deleteProduct,
-  modifyProduct,
+const sofaServices = {
+  getSofa,
+  createSofa,
+  deleteSofa,
+  modifySofa,
   addImage,
   deleteImage,
-  createEmptyProduct
+  createEmptySofa
 };
 
-export default productServices;
+export default sofaServices;

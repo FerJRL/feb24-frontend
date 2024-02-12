@@ -24,9 +24,9 @@ const Navbar = () => {
             <Nav>
                 {/* <Bars /> */}
                 <NavMenu>
-                    <NavLink to="/" id="create">Products</NavLink>
-                    <NavLink to="/product/new" id="create">
-                        Sell something
+                    <NavLink to="/" id="create">Sofás</NavLink>
+                    <NavLink to="/sofa/new" id="create">
+                        Crear Sofá
                     </NavLink>
                 </NavMenu>
 

@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import "../../assets/styles/productForm.css";
-import productServices from "../../services/productServices";
+import sofaServices from "../../services/sofaServices";
 
-export default function NewProduct({ userLogged }) {
+export default function NewSofa({ userLogged }) {
   const navigate = useNavigate();
 
-  let productId;
+  let sofaId;
 
   useEffect(() => {
     if (userLogged == undefined) {
@@ -18,13 +18,13 @@ export default function NewProduct({ userLogged }) {
 
   useEffect(() => {
     const redirect = async () => {
-      const newProduct = await productServices.createEmptyProduct(
-        userLogged._id,
+      const newSofa = await sofaServices.createEmptySofa(
+        userLogged.email,
         userLogged.token
       );
-      productId = newProduct.insertedId;
+      sofaId = newSofa.insertedId;
 
-      navigate(`/product/edit/${productId}`);
+      navigate(`/sofa/edit/${sofaId}`);
     };
 
     redirect().catch(console.error);

@@ -1,8 +1,9 @@
 import Login from "./components/Login/login.jsx";
-import Products from "./components/Products/products.jsx";
-import Product from "./components/Products/product.jsx";
-import ProductForm from "./components/Products/productForm.jsx";
-import NewProduct from "./components/Products/newProduct.jsx";
+
+import Sofas from "./components/Sofas/sofas.jsx";
+import Sofa from "./components/Sofas/sofa.jsx";
+import SofaForm from "./components/Sofas/sofaForm.jsx";
+import NewSofa from "./components/Sofas/newSofa.jsx";
 
 import Navbar from "./NavBar.jsx";
 
@@ -51,10 +52,10 @@ function App() {
                 <Navbar />
 
                 <Routes>
-                    <Route path="/" element={<Products userLogged={userLogged} />} />
-                    <Route path="/product/:id" element={<Product userLogged={userLogged} />} />
-                    <Route path="/product/edit/:id" element={<ProductForm userLogged={userLogged} />} />
-                    <Route path="/product/new" element={<NewProduct userLogged={userLogged} />} />
+                    <Route path="/" element={<Sofas userLogged={userLogged} />} />
+                    <Route path="/sofa/:id" element={<Sofa userLogged={userLogged} />} />
+                    <Route path="/sofa/edit/:id" element={<SofaForm userLogged={userLogged} />} />
+                    <Route path="/sofa/new" element={<NewSofa userLogged={userLogged} />} />
                     <Route path="/login" element={<Login userLogged={userLogged} setUserLogged={setUserLogged} />} />
                 </Routes>
         </ErrorBoundary>

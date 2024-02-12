@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import "../../assets/styles/productForm.css";
-import productServices from "../../services/productServices";
+import sofaServices from "../../services/sofaServices";
 import geoapiServices from "../../services/geoapiServices";
 
-export default function NewProductForm({ userLogged }) {
+export default function NewSofaForm({ userLogged }) {
   const navigate = useNavigate();
 
   const [images, setImages] = useState([]);
@@ -13,14 +13,14 @@ export default function NewProductForm({ userLogged }) {
 
   const [loading, setLoading] = useState(false);
 
-  const [product, setProduct] = useState({
+  const [sofa, setSofa] = useState({
     name: "",
     description: "",
     price: 0.0,
     length: 1,
   });
 
-  let productId = useParams().id;
+  let sofaId = useParams().id;
 
   useEffect(() => {
     if (userLogged == undefined) {
@@ -34,19 +34,19 @@ export default function NewProductForm({ userLogged }) {
       setLoading(true);
 
 
-      const productData = await productServices.getProduct(
-        productId,
+      const sofaData = await sofaServices.getSofa(
+        sofaId,
         userLogged.token
       );
-      if (productData.images != undefined) setImages(productData.images);
-      if (productData._id == undefined) {
+      if (sofaData.images != undefined) setImages(sofaData.images);
+      if (sofaData._id == undefined) {
         navigate("/");
         return;
-      } else if (productData.userID != userLogged._id) {
-        navigate(`/product/${productId}`);
+      } else if (sofaData.anfitrion != userLogged.email) {
+        navigate(`/sofa/${sofaId}`);
         return;
       } else {
-        setProduct(productData);
+        setSofa(sofaData);
       }
 
       setLoading(false);
@@ -55,42 +55,18 @@ export default function NewProductForm({ userLogged }) {
     fetchData().catch(console.error);
   }, []);
 
-  const setName = (event) => {
-    const newName = {
-      ...product,
-      name: event.target.value,
+  const setDireccion = (event) => {
+    const newDireccion = {
+      ...sofa,
+      direccion: event.target.value,
     };
-    setProduct(newName);
-  };
-
-  const setDescription = (event) => {
-    const newDesc = {
-      ...product,
-      description: event.target.value,
-    };
-    setProduct(newDesc);
-  };
-
-  const setPrice = (event) => {
-    const newPrice = {
-      ...product,
-      price: parseFloat(event.target.value),
-    };
-    setProduct(newPrice);
-  };
-
-  const setLength = (event) => {
-    const newLength = {
-      ...product,
-      length: parseInt(event.target.value),
-    };
-    setProduct(newLength);
+    setSofa(newDireccion);
   };
 
   const handleUploadImage = async (event) => {
     setLoading(true);
-    const image = await productServices.addImage(
-      productId,
+    const image = await sofaServices.addImage(
+      sofaId,
       event.target.files[0],
       userLogged.token
     );
@@ -101,29 +77,29 @@ export default function NewProductForm({ userLogged }) {
 
   const handleDeleteImage = async (image) => {
     setLoading(true);
-    await productServices.deleteImage(image.public_id, userLogged.token);
+    await sofaServices.deleteImage(image.public_id, userLogged.token);
     setImages(images.filter((img) => image.public_id != img.public_id));
     setLoading(false);
   };
 
   const handleDeleteNewImage = async (image) => {
     setLoading(true);
-    await productServices.deleteImage(image.public_id, userLogged.token);
+    await sofaServices.deleteImage(image.public_id, userLogged.token);
     setNewImages(newImages.filter((img) => image.public_id != img.public_id));
     setLoading(false);
   };
 
   const handleCancel = async () => {
     newImages.forEach(async (image) => {
-      await productServices.deleteImage(image.public_id, userLogged.token);
+      await sofaServices.deleteImage(image.public_id, userLogged.token);
     });
-    const productData = await productServices.getProduct(
-      productId,
+    const sofaData = await sofaServices.getSofa(
+      sofaId,
       userLogged.token
     );
 
-    if (productData.name == "") {
-      productServices.deleteProduct(productId, userLogged.token);
+    if (sofaData.name == "") {
+      sofaServices.deleteSofa(sofaId, userLogged.token);
     }
     navigate(`/`);
   };
@@ -131,37 +107,32 @@ export default function NewProductForm({ userLogged }) {
   const handleSave = async () => {
 
     const body = {
-      name: product.name,
-      description: product.description,
-      price: product.price,
-      length: product.length,
-      userID: userLogged._id,
-      date: new Date(),
+      anfitrion: userLogged.email,
+      direccion: sofa.direccion,
       location: {
         type: "Point",
         coordinates: [36.602274, -4.531727],
       }
     };
 
-    let zipCode = window.prompt("Type here your postal code");
-    if (zipCode) {
-        const response = await geoapiServices.getCoordinates(zipCode);
-        body.location.coordinates = [response.lon, response.lat];
-    }
+    let response;
+
+    response = await geoapiServices.getCoordinates(body.direccion);
+    body.location.coordinates = [response.lon, response.lat];
 
     if (images.length != 0 || newImages.length != 0)
       body.images = [...images, ...newImages];
 
-    let response;
-    if (productId == undefined) {
-      response = await productServices.createProduct(
+    
+    if (sofaId == undefined) {
+      response = await sofaServices.createSofa(
         body,
         userLogged.token
       );
-      productId = response.insertedId;
+      sofaId = response.insertedId;
     } else {
-      response = await productServices.modifyProduct(
-        productId,
+      response = await sofaServices.modifySofa(
+        sofaId,
         body,
         userLogged.token
       );
@@ -172,7 +143,7 @@ export default function NewProductForm({ userLogged }) {
         handleCancel();
       }
     } else {
-      navigate(`/product/${productId}`);
+      navigate(`/sofa/${sofaId}`);
     }
   };
 
@@ -221,7 +192,7 @@ export default function NewProductForm({ userLogged }) {
                         <img
                           className="editproduct-image"
                           src={image.secure_url}
-                          alt="Producto"
+                          alt="Sofao"
                         ></img>
                       </td>
                     </tr>
@@ -242,7 +213,7 @@ export default function NewProductForm({ userLogged }) {
                           <img
                             className="editproduct-image"
                             src={image.secure_url}
-                            alt="Producto"
+                            alt="Sofao"
                           ></img>
                         </td>
                       </tr>
@@ -254,30 +225,9 @@ export default function NewProductForm({ userLogged }) {
 
         <div className="productedit-form-container">
           <form>
-            <label>Name: </label>
-            <input type="text" value={product.name} onChange={setName}></input>
+            <label>Dirección (para geolocalizar): </label>
+            <input type="text" value={sofa.direccion} onChange={setDireccion}></input>
             <br />
-            <label>Description: </label>
-            <textarea
-              value={product.description}
-              onChange={setDescription}
-            ></textarea>
-            <br />
-            <label>Price:</label>
-            <input
-              type="number"
-              step={0.1}
-              value={product.price}
-              onChange={setPrice}
-            ></input>
-            <br />
-            <label>Length of the bid:</label>
-            <select onChange={setLength} value={product.length}>
-              <option value={1}>1 day</option>
-              <option value={7}>7 days</option>
-              <option value={14}>14 days</option>
-              <option value={30}>30 days</option>
-            </select>
           </form>
         </div>
       </div>
