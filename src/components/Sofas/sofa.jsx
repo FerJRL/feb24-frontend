@@ -86,7 +86,7 @@ export default function Sofa({ userLogged }) {
           &#8250;
         </button>
         <div className="product-owner-options">
-          {userLogged != undefined && userLogged._id == sofa.userID ? (
+          {userLogged != undefined && userLogged.email == sofa.anfitrion ? (
             <>
               <button id="product-modify" onClick={() => modifySofa()}>
                 <span className="material-icons">edit</span>
@@ -105,8 +105,9 @@ export default function Sofa({ userLogged }) {
           <div className="product-owner">
             <img src={"/user.jpg"} />
             {sofa.anfitrion}
-            
           </div>
+
+          <h2>Reservas:</h2>
         </div>
 
         
